@@ -1,0 +1,53 @@
+body{
+    background-color: lightgray;
+    font-family: Arial, Helvetica, sans-serif;
+}
+h1{
+    text-align: center;
+}
+#formContainer{
+    display: flex;
+    justify-content: center;
+}
+form{
+    font-size: 16px;
+}
+form p {
+    margin: 0px 2px;
+}
+form div{
+    margin-bottom: 5px;
+}
+form input{
+    display: block;
+}
+.erreur{
+    height: 16px;
+    color: red;
+    font-size: 12px;
+}
+/* Listes des résultats API */
+.ui-menu {
+    background:white;
+    border: 1px solid rgb(114, 151, 158);
+    border-radius: 0 0 10px 10px;
+    max-width:30%;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    padding-left: 5px;
+}
+
+.ui-menu-item {
+    list-style: none;
+    transition: 0.3s;
+    transform: translatex(5px);
+}
+
+.ui-menu-item:hover{
+    color: grey;
+    transform: translatex(15px);
+    cursor:pointer;
+}
+.ui-helper-hidden-accessible{
+    display: none;
+}
