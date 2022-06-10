@@ -1,40 +1,41 @@
 <?php
 
-require_once "dbConnexion.php";
+require_once "fonctions.php";
 
-if(isset($_POST['siren'])){
+if(isset($_POST['nom']) && isset($_POST['prenom']) && 
+isset($_POST['adresse']) && isset($_POST['rue']) && isset($_POST['codePostal']) && isset($_POST['ville']) &&
+isset($_POST['longitude']) && isset($_POST['latitude']) && 
+isset($_POST['mail']) && isset($_POST['tel']) && isset($_POST['siren']) &&
+isset($_POST['mdp']) && isset($_POST['cMdp'])){
 
-    echo 'OK';
-    // Plusieurs destinataires
-    $to = 'louis.vraie@gmail.com'; // notez la virgule
+    echo 'Tout est set ! ';
+    $nom = $_POST['nom'];
+    $prenom = $_POST['prenom'];
+    $rue = $_POST['rue'];
+    $ville = $_POST['ville'];
+    $cp = $_POST['codePostal'];
+    $mail = $_POST['mail'];
+    $tel = $_POST['tel'];
+    $mdp = $_POST['mdp'];
+    $siren = $_POST['siren'];
+    $latitude = $_POST['latitude'];
+    $longitude = $_POST['longitude'];
 
-    // Sujet
-    $subject = 'NewWorld - Confirmation d\'inscription';
+    //on insère le producteur en base
+    $infosProducteur = insertProducteur($nom,$prenom,$rue,$ville,$cp,$mail,$tel,$mdp,$siren,$latitude,$longitude);
 
-    // message
-    $message = '
-    <html>
-     <head>
-      <title>NewWorld - Confirmation d\'inscription</title>
-     </head>
-     <body>
-      <p>Vous vous êtes inscrit sur notre application Circuits Courts.</p>
-      <p>Veuillez confirmer votre email pour que votre inscription soit prise en compte</p>
-      <a href="https://www.google.com">Cliquez ici pour confirmer votre email</a>
-     </body>
-    </html>
-    ';
-
-    // Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
-    $headers[] = 'MIME-Version: 1.0';
-    $headers[] = 'Content-type: text/html; charset=utf-8';
-
-    // En-têtes additionnels
-    $headers[] = 'To: Louis Vraie <louis.vraie@gmail.com>';
-    $headers[] = 'From: NewWorld <newworld@btsinfogap.org>';
-
-    // Envoi
-    mail($to, $subject, $message, implode("\r\n", $headers));
+    //si l'insertion a fonctionné
+    if(isset($infosProducteur['nom'])){
+        echo 'Insertion OK ! ';
+        if($message = sendConfirmationMail($infosProducteur['nom'],$infosProducteur['prenom'],$infosProducteur['mail'],$infosProducteur['codeConfirmation'])){
+            echo 'Mail envoyé ! ';
+            echo $message;
+        }
+    } else {
+        echo $infosProducteur['error'];
+    }
+} else {
+    echo 'Tous n\'est pas set';
 }
 
 ?>
